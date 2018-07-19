@@ -78,7 +78,7 @@ contract MonsterBreeding is MonsterOwnership {
         // this as a constant saves gas. Yay, Solidity!
         if(increaseIndex > 0)
         {
-            if (newCooldownIndex < monsterConstants.actionCooldownsLength()) {
+            if (newCooldownIndex + 1 < monsterConstants.actionCooldownsLength()) {
                 newCooldownIndex += 1;
             }
         }

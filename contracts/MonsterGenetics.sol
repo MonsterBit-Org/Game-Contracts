@@ -9,7 +9,7 @@ contract MonsterGenetics {
     //size of a gene in bits. 6 bits provide 64 variants of gene
     uint8 constant geneBits = 6;
     uint8 constant battleGeneBits = 4;
-    uint8 constant battleGenesGroupsCount = 3;
+    uint8 constant battleGenesGroupsCount = 5;
     
     //count of genes in a group. right-most gene is considered dominant and will 
     //have effect on the image. others are considered recessive. 

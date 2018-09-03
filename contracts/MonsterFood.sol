@@ -156,8 +156,7 @@ contract MonsterFood {
         price += feedingFee;
         require(msg.value >= price);
         
-        monster.cooldownEndTimestamp = 0;
-        monster.cooldownStartTimestamp = 0;
+        monster.cooldownEndTimestamp = uint64(now);
         monster.activeRestCooldownIndex = 0;
         monster.activeGrowCooldownIndex = 0;
         
@@ -183,8 +182,7 @@ contract MonsterFood {
         require(msg.value >= price);
         
         monster.level = 1;
-        monster.cooldownEndTimestamp = 0;
-        monster.cooldownStartTimestamp = 0;
+        monster.cooldownEndTimestamp = uint64(now);
         monster.activeRestCooldownIndex = 0;
         monster.activeGrowCooldownIndex = 0;
         

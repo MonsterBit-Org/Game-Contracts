@@ -37,38 +37,40 @@ contract MonsterFood {
     }
     
     uint[] public cdPricesGrow = [
-        1200 szabo,
-        2400 szabo,
-        2400 szabo,
-        4800 szabo,
-        4800 szabo,
-        7200 szabo,
-        7200 szabo,
-        9600 szabo,
-        9600 szabo,
-        12000 szabo,
-        12000 szabo,
-        14400 szabo,
-        14400 szabo,
-        16800 szabo
+        10000 szabo,
+        20000 szabo,
+        30000 szabo,
+        40000 szabo,
+        50000 szabo,
+        55000 szabo,
+        60000 szabo,
+        65000 szabo,
+        70000 szabo,
+        80000 szabo,
+        85000 szabo,
+        90000 szabo,
+        108000 szabo,
+        120000 szabo
         ];
-        
+
+    
+    
     uint[] public cdPricesRest = [
-        1200 szabo,
-        2400 szabo,
-        4800 szabo,
-        7200 szabo,
-        9600 szabo,
-        12000 szabo,
-        14400 szabo,
-        16800 szabo,
-        19200 szabo,
-        21600 szabo,
-        24000 szabo,
-        26400 szabo,
-        28800 szabo,
-        36000 szabo
-        ];
+        10000 szabo,
+        20000 szabo,
+        30000 szabo,
+        40000 szabo,
+        50000 szabo,
+        55000 szabo,
+        60000 szabo,
+        65000 szabo,
+        70000 szabo,
+        80000 szabo,
+        85000 szabo,
+        90000 szabo,
+        108000 szabo,
+        120000 szabo
+    ];
     
    
     struct Potion {
@@ -76,6 +78,12 @@ contract MonsterFood {
         uint256 priceWei;
         uint8 potionEffect;
         bool exists;
+    }
+    
+    uint256 public feedingFee = 5 finney;
+    
+    function setFeedingFee(uint256 val) external onlyOwner {
+        feedingFee = val;
     }
     
     address public ownerAddress;
@@ -133,6 +141,7 @@ contract MonsterFood {
         (p1_, p2_, p3_) = MonsterLib.encodeMonsterBits(mon);
     }
     
+    
 
     
     function applyCDR(address originalCaller, MonsterLib.Monster monster) internal
@@ -144,6 +153,7 @@ contract MonsterFood {
         uint remainingCdLength = monster.cooldownEndTimestamp - now;
         
         uint price = (10000 * remainingCdLength / totalCdLength) * totalPriceWei / 10000;
+        price += feedingFee;
         require(msg.value >= price);
         
         monster.cooldownEndTimestamp = 0;
@@ -169,6 +179,7 @@ contract MonsterFood {
         }
 
         uint price = (10000 * remainingCdLength / totalCdLength) * totalPriceWei / 10000;
+        price += feedingFee;
         require(msg.value >= price);
         
         monster.level = 1;

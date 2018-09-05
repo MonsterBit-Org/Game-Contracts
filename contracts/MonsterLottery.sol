@@ -1,0 +1,124 @@
+pragma solidity ^0.4.23;
+
+import "./ERC721.sol";
+import "./Pausable.sol";
+
+contract MonsterLottery is Ownable
+{
+    
+    ERC721 public nonFungibleContract;
+    address backendAddress;
+    
+    constructor(address _nftAddress, address _backend) public {
+        require(_nftAddress != address(0));
+        require(_backend != address(0));
+        ERC721 candidateContract = ERC721(_nftAddress);
+        nonFungibleContract = candidateContract;
+        backendAddress = _backend;
+        _createLottery(0, true);
+    }
+    
+    struct Bet
+    {
+        address sender;
+        uint amount;
+    }
+    
+    struct Lottery {
+        uint32 monsterId;
+        uint totalBet;
+        bool finished;
+        uint[] betIds;
+        address winner;
+    }
+    
+    Lottery[] lotteries;
+    Bet[] bets;
+    
+    uint activeLottery = 0;
+    
+    modifier onlyAuthorized() 
+    {
+      require(msg.sender == owner || msg.sender == backendAddress);
+      _;
+    }
+    
+    function _createLottery(uint monsterId, bool finished) internal returns(uint)
+    {
+        Lottery memory _lottery;
+        _lottery.monsterId = uint32(monsterId);
+        _lottery.finished = finished;
+        uint index = lotteries.push(_lottery) - 1;
+        return index;
+    }
+    
+    function _saveBet(address sender, uint amount) internal returns(uint)
+    {
+        Bet memory _bet;
+        _bet.sender = sender;
+        _bet.amount = amount;
+        uint index = bets.push(_bet) - 1;
+        return index;
+    }
+    
+    function _isActive() internal view returns(bool) 
+    {
+        Lottery storage _lottery = lotteries[activeLottery];
+        return !_lottery.finished;
+    }
+    
+    function startLottery(uint monsterId) onlyAuthorized external
+    {
+        require(uint(uint32(monsterId)) == monsterId);
+        require(!_isActive());
+        require(nonFungibleContract.ownerOf(monsterId) == address(this));
+        activeLottery = _createLottery(monsterId, false);
+    }
+    
+    function bet() external payable
+    {
+        require(_isActive());
+        require(msg.value > 0);
+        Lottery storage _lottery = lotteries[activeLottery];
+        
+        uint betIndex = _saveBet(msg.sender, msg.value);
+        _lottery.betIds.push(betIndex);
+        _lottery.totalBet += msg.value;
+    }
+    
+    function _random() private view returns (uint) 
+    {
+        return uint256(keccak256(abi.encodePacked(block.timestamp, block.difficulty)));
+    }
+    
+    function finishLottery() onlyAuthorized external
+    {
+        Lottery storage _lottery = lotteries[activeLottery];
+        require(!_lottery.finished);
+        require(_lottery.betIds.length > 0);
+        
+        uint endpoint = _random() % _lottery.totalBet;
+        uint currentValue = 0;
+        address winner = address(0);
+        
+        for (uint i = 0; i < _lottery.betIds.length; i++) 
+        {
+            Bet storage _bet = bets[_lottery.betIds[i]];
+            currentValue += _bet.amount;
+            if(currentValue - 1 <= endpoint)
+            {
+                winner = _bet.sender;
+                break;
+            }
+        }
+        
+        if(winner == address(0))
+        {
+            winner = bets[_lottery.betIds[_lottery.betIds.length - 1]].sender;
+        }
+        
+        nonFungibleContract.transfer(winner, _lottery.monsterId);
+        _lottery.finished = true;
+        _lottery.winner = winner;
+    }
+}

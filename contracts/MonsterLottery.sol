@@ -112,7 +112,7 @@ contract MonsterLottery is Ownable
         {
             Bet storage _bet = bets[_lottery.betIds[i]];
             currentValue += _bet.amount;
-            if(currentValue - 1 <= endpoint)
+            if(currentValue > endpoint)
             {
                 winner = _bet.sender;
                 break;

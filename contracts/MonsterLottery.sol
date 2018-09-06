@@ -32,6 +32,10 @@ contract MonsterLottery is Ownable
         address winner;
     }
     
+    event LotteryStarted(uint lotteryId, uint monsterId);
+    event LotteryFinished(uint lotteryId, uint monsterId, address winner);
+    event BetPlaced(uint lotteryId, uint monsterId, address sender, uint amount);
+    
     Lottery[] lotteries;
     Bet[] bets;
     
@@ -73,6 +77,7 @@ contract MonsterLottery is Ownable
         require(!_isActive());
         require(nonFungibleContract.ownerOf(monsterId) == address(this));
         activeLottery = _createLottery(monsterId, false);
+        emit LotteryStarted(activeLottery, monsterId);
     }
     
     function bet() external payable
@@ -84,9 +89,11 @@ contract MonsterLottery is Ownable
         uint betIndex = _saveBet(msg.sender, msg.value);
         _lottery.betIds.push(betIndex);
         _lottery.totalBet += msg.value;
+        
+        emit BetPlaced(activeLottery, _lottery.monsterId, msg.sender, msg.value);
     }
     
-    function _random() private view returns (uint) 
+    function _random() internal view returns (uint) 
     {
         return uint256(keccak256(abi.encodePacked(block.timestamp, block.difficulty)));
     }
@@ -120,5 +127,27 @@ contract MonsterLottery is Ownable
         nonFungibleContract.transfer(winner, _lottery.monsterId);
         _lottery.finished = true;
         _lottery.winner = winner;
+        
+        emit LotteryFinished(activeLottery, _lottery.monsterId, winner);
+    }
+    
+    function withdrawBalance() external {
+        address nftAddress = address(nonFungibleContract);
+
+        require(
+            msg.sender == owner ||
+            msg.sender == nftAddress
+        );
+        
+        msg.sender.transfer(address(this).balance);
+    }
+    
+    function getActiveLottery() external view returns(uint lotteryId, uint monsterId, uint totalBet, bool finished)
+    {
+        Lottery storage _lottery = lotteries[activeLottery];
+        lotteryId = activeLottery;
+        monsterId = _lottery.monsterId;
+        totalBet = _lottery.totalBet;
+        finished = _lottery.finished;
     }
 }

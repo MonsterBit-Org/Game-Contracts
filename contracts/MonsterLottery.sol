@@ -15,7 +15,7 @@ contract MonsterLottery is Ownable
         ERC721 candidateContract = ERC721(_nftAddress);
         nonFungibleContract = candidateContract;
         backendAddress = _backend;
-        _createLottery(0, true);
+        _createLottery(0, true, 0);
     }
     
     struct Bet
@@ -27,12 +27,13 @@ contract MonsterLottery is Ownable
     struct Lottery {
         uint32 monsterId;
         uint totalBet;
+        uint64 endTimestamp;
         bool finished;
         uint[] betIds;
         address winner;
     }
     
-    event LotteryStarted(uint lotteryId, uint monsterId);
+    event LotteryStarted(uint lotteryId, uint monsterId, uint endTimestamp);
     event LotteryFinished(uint lotteryId, uint monsterId, address winner);
     event BetPlaced(uint lotteryId, uint monsterId, address sender, uint amount);
     
@@ -47,11 +48,12 @@ contract MonsterLottery is Ownable
       _;
     }
     
-    function _createLottery(uint monsterId, bool finished) internal returns(uint)
+    function _createLottery(uint monsterId, bool finished, uint endTimestamp) internal returns(uint)
     {
         Lottery memory _lottery;
         _lottery.monsterId = uint32(monsterId);
         _lottery.finished = finished;
+        _lottery.endTimestamp = uint64(endTimestamp);
         uint index = lotteries.push(_lottery) - 1;
         return index;
     }
@@ -71,13 +73,14 @@ contract MonsterLottery is Ownable
         return !_lottery.finished;
     }
     
-    function startLottery(uint monsterId) onlyAuthorized external
+    function startLottery(uint monsterId, uint endTimestamp) onlyAuthorized external
     {
         require(uint(uint32(monsterId)) == monsterId);
+        require(uint(uint64(endTimestamp)) == endTimestamp);
         require(!_isActive());
         require(nonFungibleContract.ownerOf(monsterId) == address(this));
-        activeLottery = _createLottery(monsterId, false);
-        emit LotteryStarted(activeLottery, monsterId);
+        activeLottery = _createLottery(monsterId, false, endTimestamp);
+        emit LotteryStarted(activeLottery, monsterId, endTimestamp);
     }
     
     function bet() external payable
@@ -142,12 +145,13 @@ contract MonsterLottery is Ownable
         msg.sender.transfer(address(this).balance);
     }
     
-    function getActiveLottery() external view returns(uint lotteryId, uint monsterId, uint totalBet, bool finished)
+    function getActiveLottery() external view returns(uint lotteryId, uint monsterId, uint totalBet, bool finished, uint endTimestamp)
     {
         Lottery storage _lottery = lotteries[activeLottery];
         lotteryId = activeLottery;
         monsterId = _lottery.monsterId;
         totalBet = _lottery.totalBet;
         finished = _lottery.finished;
+        endTimestamp = _lottery.endTimestamp;
     }
 }

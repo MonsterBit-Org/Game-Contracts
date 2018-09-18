@@ -8,6 +8,7 @@ contract MonsterLottery is Ownable
     
     ERC721 public nonFungibleContract;
     address backendAddress;
+    uint public minimalBet = 10 finney;
     
     constructor(address _nftAddress, address _backend) public {
         require(_nftAddress != address(0));
@@ -73,6 +74,10 @@ contract MonsterLottery is Ownable
         return !_lottery.finished;
     }
     
+    function setMinimalBet(uint256 val) external onlyAuthorized {
+        minimalBet = val;
+    }
+    
     function startLottery(uint monsterId, uint endTimestamp) onlyAuthorized external
     {
         require(uint(uint32(monsterId)) == monsterId);
@@ -86,7 +91,7 @@ contract MonsterLottery is Ownable
     function bet() external payable
     {
         require(_isActive());
-        require(msg.value > 0);
+        require(msg.value >= minimalBet && msg.value > 0);
         Lottery storage _lottery = lotteries[activeLottery];
         
         uint betIndex = _saveBet(msg.sender, msg.value);

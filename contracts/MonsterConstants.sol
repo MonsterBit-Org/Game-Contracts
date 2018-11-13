@@ -28,7 +28,7 @@ contract MonsterConstants is Ownable
         return growCooldowns.length;
     }
     
-    uint8[27] public genToGrowCdIndex = [
+    uint8[28] public genToGrowCdIndex = [
         0, 0,
         1, 1,
         2, 2,
@@ -42,12 +42,12 @@ contract MonsterConstants is Ownable
         10, 10,
         11, 11,
         12, 12,
-        13
+        13, 13
     ];
     
     function genToGrowCdIndexLength() public view returns(uint)
     {
-        return genToGrowCdIndex.length;
+        return genToGrowCdIndex.length - 1;
     }
     
     uint32[14] public actionCooldowns = [

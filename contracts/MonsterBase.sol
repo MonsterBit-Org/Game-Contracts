@@ -180,9 +180,9 @@ contract MonsterBase is MonsterAccessControl {
         if(monster.level == 0)
         {
             uint gen = monster.generation;
-            if(gen > monsterConstants.genToGrowCdIndexLength())
+            if(gen >= monsterConstants.genToGrowCdIndexLength())
             {
-                gen = monsterConstants.genToGrowCdIndexLength();
+                gen = monsterConstants.genToGrowCdIndexLength() - 1;
             }
             
             monster.activeGrowCooldownIndex = monsterConstants.genToGrowCdIndex(gen);

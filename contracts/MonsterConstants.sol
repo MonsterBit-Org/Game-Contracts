@@ -6,6 +6,7 @@ contract MonsterConstants is Ownable
 {
     bool public isMonsterConstants = true;
     
+    /* old data
     uint32[14] public growCooldowns = [
         uint32(30 minutes),
         uint32(1 hours),
@@ -21,6 +22,24 @@ contract MonsterConstants is Ownable
         uint32(24 hours),
         uint32(24 hours),
         uint32(48 hours)
+    ];
+    */
+    
+    uint32[14] public growCooldowns = [
+        uint32(30 minutes),
+        uint32(1 hours),
+        uint32(2 hours),
+        uint32(4 hours),
+        uint32(6 hours),
+        uint32(8 hours),
+        uint32(12 hours),
+        uint32(24 hours),
+        uint32(36 hours),
+        uint32(48 hours),
+        uint32(72 hours),
+        uint32(96 hours),
+        uint32(120 hours),
+        uint32(168 hours)
     ];
     
     function growCooldownsLength() public view returns(uint)

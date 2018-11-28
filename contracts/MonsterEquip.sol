@@ -238,7 +238,27 @@ contract MonsterEquipRepair is MonsterEquipERC
     
     constructor() public
     {
-        repairPrices[111] = 1 ether;
+        //weapons
+        repairPrices[211] = 2 finney; //Hammer
+        repairPrices[212] = 4 finney; //Sledge
+        repairPrices[213] = 6 finney; //Ratchet
+        repairPrices[214] = 8 finney; //Seeder
+        repairPrices[215] = 10 finney; //Sentinel
+        
+        repairPrices[231] = 2 finney; //Firebug
+        repairPrices[232] = 4 finney; //Blaster
+        repairPrices[233] = 6 finney; //Fan
+        repairPrices[234] = 10 finney; //Scalpel
+        repairPrices[235] = 10 finney; //Flame
+
+        //armors
+        repairPrices[121] = 2 finney; //CeramicPlate
+        repairPrices[122] = 4 finney; //SteelPlate
+        repairPrices[123] = 8 finney; //SteelCiras
+        
+        repairPrices[161] = 2 finney; //PowerShield
+        repairPrices[162] = 6 finney; //PowerField
+        repairPrices[163] = 10 finney; //PowerArmor
     }
     
     function setRepairPrice(uint _typeCode, uint price) onlyCLevel public
@@ -307,6 +327,31 @@ contract MonsterEquipAuc is MonsterEquipRepair
 
 contract MonsterEquipMinting is MonsterEquipAuc
 {
+    
+    constructor() public
+    {
+        //weapons
+        publicMintablePrices[211] = 4 finney; //Hammer
+        publicMintablePrices[212] = 8 finney; //Sledge
+        publicMintablePrices[213] = 12 finney; //Ratchet
+        publicMintablePrices[214] = 16 finney; //Seeder
+        publicMintablePrices[215] = 20 finney; //Sentinel
+        
+        publicMintablePrices[231] = 4 finney; //Firebug
+        publicMintablePrices[232] = 8 finney; //Blaster
+        publicMintablePrices[233] = 12 finney; //Fan
+        publicMintablePrices[234] = 20 finney; //Scalpel
+        publicMintablePrices[235] = 20 finney; //Flame
+
+        //armors
+        publicMintablePrices[121] = 4 finney; //CeramicPlate
+        publicMintablePrices[122] = 8 finney; //SteelPlate
+        publicMintablePrices[123] = 16 finney; //SteelCiras
+        
+        publicMintablePrices[161] = 4 finney; //PowerShield
+        publicMintablePrices[162] = 12 finney; //PowerField
+        publicMintablePrices[163] = 20 finney; //PowerArmor
+    }
     
     function _createEquipOwned(uint _typeCode, address _owner) internal returns(uint)
     {
@@ -398,6 +443,11 @@ contract MonsterEquip is MonsterEquipMinting
         require(msg.sender == address(saleAuction));
     }
     
-    
+    function getEquip(uint256 _id) external view returns (uint typeCode) 
+    {
+        Equip storage eq = equips[_id];
+        typeCode = eq.typeCode;
+    }
+
     
 }

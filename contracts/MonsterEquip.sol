@@ -239,26 +239,36 @@ contract MonsterEquipRepair is MonsterEquipERC
     constructor() public
     {
         //weapons
-        repairPrices[211] = 2 finney; //Hammer
-        repairPrices[212] = 4 finney; //Sledge
-        repairPrices[213] = 6 finney; //Ratchet
-        repairPrices[214] = 8 finney; //Seeder
-        repairPrices[215] = 10 finney; //Sentinel
-        
-        repairPrices[231] = 2 finney; //Firebug
-        repairPrices[232] = 4 finney; //Blaster
-        repairPrices[233] = 6 finney; //Fan
-        repairPrices[234] = 10 finney; //Scalpel
-        repairPrices[235] = 10 finney; //Flame
+        repairPrices[110] = 2 finney; //Puncher
+        repairPrices[111] = 4 finney; //Hammer
+        repairPrices[112] = 6 finney; //Sledge
+        repairPrices[113] = 8 finney; //Ratchet
+        repairPrices[114] = 8 finney; //Sentinel
+        repairPrices[115] = 8 finney; //Opener
+        repairPrices[116] = 10 finney; //Beater
+        repairPrices[117] = 12 finney; //Pecker
+        repairPrices[118] = 12 finney; //Maradeur
+        repairPrices[119] = 16 finney; //Seeder
+        repairPrices[120] = 16 finney; //Goldfinger
+
+        repairPrices[150] = 4  finney; //Firebug
+        repairPrices[151] = 6 finney; //Lighter
+        repairPrices[152] = 8 finney; //Raythrower
+        repairPrices[153] = 8 finney; //Scalpel
+        repairPrices[154] = 8 finney; //Fireball
+        repairPrices[155] = 10 finney; //Fan
+        repairPrices[156] = 12 finney; //Redskin
+        repairPrices[157] = 16 finney; //Flame
+        repairPrices[158] = 16 finney; //Punisher
 
         //armors
-        repairPrices[121] = 2 finney; //CeramicPlate
-        repairPrices[122] = 4 finney; //SteelPlate
-        repairPrices[123] = 8 finney; //SteelCiras
+        repairPrices[21] = 2 finney; //CeramicPlate
+        repairPrices[22] = 4 finney; //SteelPlate
+        repairPrices[23] = 8 finney; //SteelCiras
         
-        repairPrices[161] = 2 finney; //PowerShield
-        repairPrices[162] = 6 finney; //PowerField
-        repairPrices[163] = 10 finney; //PowerArmor
+        repairPrices[61] = 4 finney; //PowerShield
+        repairPrices[62] = 8 finney; //PowerField
+        repairPrices[63] = 12 finney; //PowerArmor
     }
     
     function setRepairPrice(uint _typeCode, uint price) onlyCLevel public
@@ -330,27 +340,38 @@ contract MonsterEquipMinting is MonsterEquipAuc
     
     constructor() public
     {
-        //weapons
-        publicMintablePrices[211] = 4 finney; //Hammer
-        publicMintablePrices[212] = 8 finney; //Sledge
-        publicMintablePrices[213] = 12 finney; //Ratchet
-        publicMintablePrices[214] = 16 finney; //Seeder
-        publicMintablePrices[215] = 20 finney; //Sentinel
         
-        publicMintablePrices[231] = 4 finney; //Firebug
-        publicMintablePrices[232] = 8 finney; //Blaster
-        publicMintablePrices[233] = 12 finney; //Fan
-        publicMintablePrices[234] = 20 finney; //Scalpel
-        publicMintablePrices[235] = 20 finney; //Flame
+        //weapons
+        publicMintablePrices[110] = 4 finney; //Puncher
+        publicMintablePrices[111] = 8 finney; //Hammer
+        publicMintablePrices[112] = 12 finney; //Sledge
+        publicMintablePrices[113] = 16 finney; //Ratchet
+        publicMintablePrices[114] = 16 finney; //Sentinel
+        publicMintablePrices[115] = 16 finney; //Opener
+        publicMintablePrices[116] = 20 finney; //Beater
+        publicMintablePrices[117] = 24 finney; //Pecker
+        publicMintablePrices[118] = 24 finney; //Maradeur
+        publicMintablePrices[119] = 32 finney; //Seeder
+        publicMintablePrices[120] = 32 finney; //Goldfinger
+
+        publicMintablePrices[150] = 8  finney; //Firebug
+        publicMintablePrices[151] = 12 finney; //Lighter
+        publicMintablePrices[152] = 16 finney; //Raythrower
+        publicMintablePrices[153] = 16 finney; //Scalpel
+        publicMintablePrices[154] = 16 finney; //Fireball
+        publicMintablePrices[155] = 20 finney; //Fan
+        publicMintablePrices[156] = 24 finney; //Redskin
+        publicMintablePrices[157] = 32 finney; //Flame
+        publicMintablePrices[158] = 32 finney; //Punisher
 
         //armors
-        publicMintablePrices[121] = 4 finney; //CeramicPlate
-        publicMintablePrices[122] = 8 finney; //SteelPlate
-        publicMintablePrices[123] = 16 finney; //SteelCiras
+        publicMintablePrices[21] = 4 finney; //CeramicPlate
+        publicMintablePrices[22] = 8 finney; //SteelPlate
+        publicMintablePrices[23] = 16 finney; //SteelCiras
         
-        publicMintablePrices[161] = 4 finney; //PowerShield
-        publicMintablePrices[162] = 12 finney; //PowerField
-        publicMintablePrices[163] = 20 finney; //PowerArmor
+        publicMintablePrices[61] = 8 finney; //PowerShield
+        publicMintablePrices[62] = 16 finney; //PowerField
+        publicMintablePrices[63] = 24 finney; //PowerArmor
     }
     
     function _createEquipOwned(uint _typeCode, address _owner) internal returns(uint)

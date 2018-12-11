@@ -2,6 +2,7 @@
 
 import "./ERC721.sol";
 import "./Pausable.sol";
+import "./MonsterLib.sol";
 
 contract MonsterBattles is Pausable {
     // Reference to contract tracking NFT ownership
@@ -52,14 +53,66 @@ contract MonsterBattles is Pausable {
         return (nonFungibleContract.ownerOf(_tokenId) == _claimant);
     }
     
+    //struct BattleBet
+    //{
+    //    uint32[] monsterIds;
+    //    address owner;
+    //}
+    
+    //BattleBet[] battleBets;
+    
+    uint256 public oneOnOneBet = 2 finney;
+    uint256 public teamfightBet = 5 finney;
+    
+    function setOneOnOneBet(uint256 val) external onlyOwner {
+        oneOnOneBet = val;
+    }
+    
+    function setTeamfightBet(uint256 val) external onlyOwner {
+        teamfightBet = val;
+    }
+    
+    event BattleBetPlaced(address better, uint monster1, uint monster2, uint monster3);
+    
     function prepareForBattle(address _originalCaller, uint _param1, uint _param2, uint _param3) public payable onlyProxy whenNotPaused returns(uint){
         require(_param1 > 0);
         require(_param2 > 0);
         require(_param3 > 0);
         
-        //param1 0-160 reserved for monster ids (5 items)
-        
         require(_originalCaller != 0);
+        
+        uint mode = MonsterLib.getBits(_param3, 0, 8);
+        uint betMode = MonsterLib.getBits(_param3, 8, 8);
+        
+        if(mode == 1){ // one one one
+          if(betMode == 1)
+          {
+             require(msg.value >= oneOnOneBet);
+             emit BattleBetPlaced(_originalCaller, 0, 0, 0);
+          }
+          else
+          {
+              uint monsterId = MonsterLib.getBits(_param1, 0, uint8(32));
+              nonFungibleContract.transferFrom(_originalCaller, address(this), monsterId);
+              emit BattleBetPlaced(_originalCaller, monsterId, 0, 0);
+          }
+        }
+        else if(mode == 2){ // teamfight
+          if(betMode == 1)
+          {
+            require(msg.value >= teamfightBet);  
+            emit BattleBetPlaced(_originalCaller, 0, 0, 0);
+          }
+          else{
+              uint monsterId1 = MonsterLib.getBits(_param1, uint8(0), uint8(32));
+              uint monsterId2 = MonsterLib.getBits(_param1, uint8(32), uint8(32));
+              uint monsterId3 = MonsterLib.getBits(_param1, uint8(64), uint8(32));
+              nonFungibleContract.transferFrom(_originalCaller, address(this), monsterId1);
+              nonFungibleContract.transferFrom(_originalCaller, address(this), monsterId2);
+              nonFungibleContract.transferFrom(_originalCaller, address(this), monsterId3);
+              emit BattleBetPlaced(_originalCaller, monsterId1, monsterId2, monsterId3);
+          }
+        }
     }
     
     function withdrawFromBattle(address _originalCaller, uint _param1, uint _param2, uint _param3) onlyProxy public returns(uint){
@@ -67,7 +120,12 @@ contract MonsterBattles is Pausable {
         require(_param2 > 0);
         require(_param3 > 0);
         require(_originalCaller != 0);
-        nonFungibleContract.transfer(_originalCaller, 0);
+        
+        //BattleBet storage _bet = battleBets[_param1];
+        //uint i = 0;
+        //for(i = 0; i< _bet.monsterIds.length; i++){
+        //    nonFungibleContract.transfer(_bet.owner, _bet.monsterIds[i]);
+        //}
     }
     
     function finishBattle(address _originalCaller, uint _param1, uint _param2, uint _param3) public onlyProxy returns(uint return1, uint return2, uint return3) {
@@ -81,7 +139,22 @@ contract MonsterBattles is Pausable {
         return1 = _param1;
         return2 = _param2; 
         return3 = _param3;
-        nonFungibleContract.transfer(_originalCaller, 0);
+        
+        address winner = address(_param1);
+        for(uint i = 0; i < 6; i++)
+        {
+          uint monsterId = MonsterLib.getBits(_param2, uint8(i * 32), uint8(32));
+          if(monsterId > 0)
+          {
+            if(nonFungibleContract.ownerOf(monsterId) == address(this))
+            {
+              nonFungibleContract.transfer(winner, monsterId);
+            }
+          }
+        } 
+        
+        winner.transfer(_param3);
+        
     }
     
     

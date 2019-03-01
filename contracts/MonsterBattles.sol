@@ -11,6 +11,8 @@ contract MonsterBattles is Pausable {
     bool public isBattleContract = true;
     address public backendAddress;
     address public ownerAddress;
+    uint availableProfit = 0;
+    
     
     constructor(address _nftAddress) public {
         ERC721 candidateContract = ERC721(_nftAddress);
@@ -35,6 +37,11 @@ contract MonsterBattles is Pausable {
         nonFungibleContract = candidateContract;
     }
     
+    function setBackendAddress(address _backend) external onlyOwner
+    {
+        backendAddress = _backend;
+    }
+    
     function withdrawBalance() external {
         address nftAddress = address(nonFungibleContract);
 
@@ -43,7 +50,9 @@ contract MonsterBattles is Pausable {
             msg.sender == nftAddress
         );
         // We are using this boolean method to make sure that even if one fails it will still work
-        nftAddress.transfer(address(this).balance);
+        uint sending = availableProfit;    
+        availableProfit = 0;
+        nftAddress.transfer(sending);
     }
     
     /// @dev Returns true if the claimant owns the token.
@@ -116,10 +125,15 @@ contract MonsterBattles is Pausable {
     }
     
     function withdrawFromBattle(address _originalCaller, uint _param1, uint _param2, uint _param3) onlyProxy public returns(uint){
-        require(_param1 > 0);
-        require(_param2 > 0);
-        require(_param3 > 0);
-        require(_originalCaller != 0);
+
+        require(_originalCaller == backendAddress);
+        
+        address winner = address(_param1);
+        uint win = MonsterLib.getBits(_param3, 0, 128);
+        uint profit = MonsterLib.getBits(_param3, 128, 128);
+        availableProfit += profit;
+        
+        winner.transfer(win);
         
         //BattleBet storage _bet = battleBets[_param1];
         //uint i = 0;
@@ -130,15 +144,18 @@ contract MonsterBattles is Pausable {
     
     function finishBattle(address _originalCaller, uint _param1, uint _param2, uint _param3) public onlyProxy returns(uint return1, uint return2, uint return3) {
         require(_originalCaller == backendAddress);
-        require(_param1 > 0);
-        require(_param2 > 0);
-        require(_param3 > 0);
-        require(_originalCaller != 0);
+
+        
         //return1 reserved for monster ids (8 items)
         //return2 0-64 reserved for monster ids (2 items)
-        return1 = _param1;
-        return2 = _param2; 
-        return3 = _param3;
+        return1 = 0;
+        return2 = 0; 
+        return3 = 0;
+        
+        
+        uint win = MonsterLib.getBits(_param3, 0, 128);
+        uint profit = MonsterLib.getBits(_param3, 128, 128);
+        availableProfit += profit;
         
         address winner = address(_param1);
         for(uint i = 0; i < 6; i++)
@@ -153,7 +170,7 @@ contract MonsterBattles is Pausable {
           }
         } 
         
-        winner.transfer(_param3);
+        winner.transfer(win);
         
     }
     

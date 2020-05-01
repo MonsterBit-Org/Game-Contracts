@@ -1,4 +1,4 @@
-﻿pragma solidity ^0.4.23;
+pragma solidity ^0.4.23;
 
 import "./MonsterBase.sol";
 import "./ERC721.sol";

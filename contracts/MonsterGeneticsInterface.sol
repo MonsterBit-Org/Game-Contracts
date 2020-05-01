@@ -1,4 +1,4 @@
-﻿pragma solidity ^0.4.23;
+pragma solidity ^0.4.23;
 
 contract MonsterGeneticsInterface {
     /// @dev simply a boolean to indicate this is the contract we expect to be

@@ -32,7 +32,7 @@ function initAddresses(network, accounts) {
 
 async function doDeploy(deployer, network) {
     // 0) Деплоим библиотеку MonsterLib, связываем ее с контрактами
-    await deployer.deploy(MonsterLib);
+    await deployer.deploy(MonsterLib, {overwrite: false});
     await deployer.link(MonsterLib, [MonsterCore, MonsterBattles, MonsterGenetics]);
     // 1) Деплоим контракт MonsterCore
     var Core = await deployer.deploy(MonsterCore, CEO);

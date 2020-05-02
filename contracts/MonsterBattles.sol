@@ -52,7 +52,7 @@ contract MonsterBattles is Pausable {
         // We are using this boolean method to make sure that even if one fails it will still work
         uint sending = availableProfit;    
         availableProfit = 0;
-        nftAddress.send(sending);
+        require(nftAddress.call.value(sending)());
     }
     
     /// @dev Returns true if the claimant owns the token.

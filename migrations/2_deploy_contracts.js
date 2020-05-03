@@ -37,15 +37,15 @@ async function doDeploy(deployer, network) {
     // 1) Деплоим контракт MonsterCore
     var Core = await deployer.deploy(MonsterCore, CEO);
     // 2) Деплоим SaleClockAuction, у него в конструкторе два параметра.
-    await deployer.deploy(SaleClockAuction, MonsterCore.address, comission);
+    await deployer.deploy(SaleClockAuction, Core.address, comission);
     // 3) Деплоим SiringClockAuction, его параметры аналогичны предыдущему пункту.
-    await deployer.deploy(SiringClockAuction, MonsterCore.address, comission);
+    await deployer.deploy(SiringClockAuction, Core.address, comission);
     // 4) Деплоим MonsterFood. Его единственный параметр в конструкторе - это адрес MonsterCore.  
-    await deployer.deploy(MonsterFood, MonsterCore.address);
+    await deployer.deploy(MonsterFood, Core.address);
     // 5) Деплоим MonsterBattles. Его единственный параметр в конструкторе - это адрес MonsterCore.  
-    await deployer.deploy(MonsterBattles, MonsterCore.address);
+    await deployer.deploy(MonsterBattles, Core.address);
     // 6) Деплоим MonsterStorage. Его единственный параметр в конструкторе - это адрес MonsterCore.  
-    await deployer.deploy(MonsterStorage, MonsterCore.address);
+    await deployer.deploy(MonsterStorage, Core.address);
     // 7) Деплоим MonsterConstants. Параметров нету. Если в него не вносились изменения, его можно оставить от предыдущих итераций. Т.е. не обязательно его передеплоивать, можно оставить старый. 
     await deployer.deploy(MonsterConstants, {overwrite: false});
     // 8) Компилируем и деплоим MonsterGenetics. Аналогично, если изменения не вносились, то его можно не деплоить заново и оставить предыдущий вариант. 

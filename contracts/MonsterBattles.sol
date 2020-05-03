@@ -10,7 +10,6 @@ contract MonsterBattles is Pausable {
     
     bool public isBattleContract = true;
     address public backendAddress;
-    address public ownerAddress;
     uint availableProfit = 0;
     
     
@@ -46,7 +45,7 @@ contract MonsterBattles is Pausable {
         address nftAddress = address(nonFungibleContract);
 
         require(
-            msg.sender == ownerAddress ||
+            msg.sender == owner ||
             msg.sender == nftAddress
         );
         // We are using this boolean method to make sure that even if one fails it will still work

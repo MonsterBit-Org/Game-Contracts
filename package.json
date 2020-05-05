@@ -3,14 +3,13 @@
   "version": "1.0.0",
   "description": "",
   "main": "truffle-config.js",
-  "dependencies": {
+  "dependencies": {},
+  "devDependencies": {
     "ganache-cli": "^6.9.1",
     "truffle": "^5.1.23",
     "@truffle/hdwallet-provider": "^1.0.34",
     "dotenv": "^8.2.0",
-    "truffle-plugin-verify": "^0.3.10"
-  },
-  "devDependencies": {
+    "truffle-plugin-verify": "^0.3.10",
     "solidity-coverage": "^0.7.5"
   },
   "scripts": {

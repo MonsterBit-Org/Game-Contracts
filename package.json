@@ -10,7 +10,9 @@
     "dotenv": "^8.2.0",
     "truffle-plugin-verify": "^0.3.10"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "solidity-coverage": "^0.7.5"
+  },
   "scripts": {
     "test": "./node_modules/.bin/truffle test",
     "compile": "./node_modules/.bin/truffle compile",

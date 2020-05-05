@@ -25,6 +25,12 @@ To test contracts
 * run ganache `./node_modules/.bin/ganache-cli`
 * run tests `./node_modules/.bin/truffle test` 
 
+## Coverage
+To check test coverage 
+* install dependencies `npm i`
+* run coverage `./node_modules/.bin/truffle run coverage --network development`
+* enjoy report at `./coverage/index.html`
+
 ## Deploy
 To deploy contracts 
 * install dependencies `npm i`
@@ -34,4 +40,6 @@ To deploy contracts
 It will deploy and correctly initialize all the contracts.
 
 ## Verify 
-To verify source code of contracts on [Etherescan](https://etherscan.io/) run `./node_modules/.bin/truffle run verify <SomeContract> <AnotherCOntract> --network <networkName>`. It requires valid Etherescan API key in `.env` file. It allows to verify several contracts at once.
+To verify source code of contracts on [Etherescan](https://etherscan.io/) run `./node_modules/.bin/truffle run verify <SomeContract> <AnotherContract> --network <networkName>`. 
+It requires valid Etherescan API key in `.env` file. 
+It allows to verify several contracts at once.

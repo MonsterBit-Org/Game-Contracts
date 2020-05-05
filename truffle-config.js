@@ -1,6 +1,7 @@
-require('dotenv').config();
-var HDWalletProvider = require("@truffle/hdwallet-provider");
-
+require("dotenv").config();
+const HDWalletProvider = require("@truffle/hdwallet-provider");
+const Web3 = require("web3");
+const web3 = new Web3();
 
 module.exports = {
   networks: {
@@ -18,10 +19,10 @@ module.exports = {
     },
     rinkeby: {
       provider: function() {
-        return new HDWalletProvider(process.env.DEPLOYER_PK, `https://rinkeby.infura.io/v3/${process.env.INFURA_ID}`);
+        return new HDWalletProvider(process.env.DEPLOYER_PK, `https://rinkeby.infura.io/v3/${process.env.INFURA_API_KEY}`);
       },
       network_id: 4,
-      gasPrice: 10000000000,//10 gwei
+      gasPrice: web3.utils.toWei("10", "gwei"),
       from: process.env.DEPLOYER_ADDRESS.toLowerCase(),
     }
   },
@@ -37,7 +38,8 @@ module.exports = {
     }
   },
   plugins: [
-    'truffle-plugin-verify'
+    "truffle-plugin-verify",
+    "solidity-coverage"
   ],
   api_keys: { // used by 'truffle-plugin-verify'
     etherscan: process.env.ETHERSCAN_API_KEY

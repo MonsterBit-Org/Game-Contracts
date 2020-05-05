@@ -1,23 +1,14 @@
 # MonsterBit
-Some info about project
+[![Build Status](https://travis-ci.org/eMarchenko/Game-Contracts.svg?branch=master)](https://travis-ci.org/eMarchenko/Game-Contracts)
+[![Coverage Status](https://coveralls.io/repos/github/eMarchenko/Game-Contracts/badge.svg?branch=master)](https://coveralls.io/github/eMarchenko/Game-Contracts?branch=master)
+
+Contracts for the [MonsterBit](https://monsterbit.org/) collectible game.
 
 ## Contracts
-Important contracts and their inheritance structure
+Important contracts
 
 ### MonsterCore
-* AccessControl
-* MonsterBase is AccessControl
-* ERC721Metadata
-* MonsterOwnership is MonsterBase, ERC721
-* MonsterAuction(SaleClockAuction address) is MonsterOwnership
-* MonsterMinting is MonsterAuction
-* MonsterCore is MonsterMinting
-
-
-### MonsterBitSaleAuction
-* ClockAuctionBase
-* ClockAuction is Pausable, ClockAuctionBase
-* SaleClockAuction is ClockAuction
+Main contract, most interactions happen through its functions.
 
 ## Test
 To test contracts

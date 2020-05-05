@@ -19,15 +19,23 @@ var COO;
 
 
 function initAddresses(network, accounts) {
-    if (network == "development") {
-        CEO = accounts[0];
-        CFO = accounts[1];
-        COO = accounts[2];
-    } else if (network == "rinkeby") {
-        CEO = process.env.CEO;
-        CFO = process.env.CFO;
-        COO = process.env.COO;
-    }
+    switch (network) {
+        case "development":
+        case "coverage":
+            CEO = accounts[0];
+            CFO = accounts[1];
+            COO = accounts[2];
+            break;
+        case "rinkeby":
+            CEO = process.env.CEO;
+            CFO = process.env.CFO;
+            COO = process.env.COO;
+            break;
+        default:
+            const err = "Unknown network: '" + network + "'. Deployment aborted";
+            console.log(err);
+            throw err;
+    }    
 }
 
 async function doDeploy(deployer, network) {

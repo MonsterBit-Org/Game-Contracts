@@ -13,9 +13,9 @@
     "solidity-coverage": "^0.7.5"
   },
   "scripts": {
-    "test": "./node_modules/.bin/truffle test",
-    "compile": "./node_modules/.bin/truffle compile",
-    "deploy": "./node_modules/.bin/truffle deploy"
+    "test": "npx truffle test",
+    "test-ci": "npx ganache-cli& npx truffle test",
+    "coverage": "npx truffle run coverage && cat coverage/lcov.info | coveralls"
   },
   "author": "",
   "license": "ISC"

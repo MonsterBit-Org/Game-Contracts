@@ -5,12 +5,13 @@
   "main": "truffle-config.js",
   "dependencies": {},
   "devDependencies": {
-    "ganache-cli": "^6.9.1",
-    "truffle": "^5.1.23",
     "@truffle/hdwallet-provider": "^1.0.34",
+    "coveralls": "^3.1.0",
     "dotenv": "^8.2.0",
-    "truffle-plugin-verify": "^0.3.10",
-    "solidity-coverage": "^0.7.5"
+    "ganache-cli": "^6.9.1",
+    "solidity-coverage": "^0.7.5",
+    "truffle": "^5.1.23",
+    "truffle-plugin-verify": "^0.3.10"
   },
   "scripts": {
     "test": "npx truffle test",

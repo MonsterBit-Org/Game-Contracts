@@ -22,7 +22,8 @@ function initAddresses(network, accounts) {
     switch (network) {
         case "development":
         case "coverage":
-        case "test": // this one is used for Truffle Teams
+        case "test": // this one is used for Truffle Teams (build)
+        case "deploy": // this one is used for Truffle Teams (deploy)
             CEO = accounts[0];
             CFO = accounts[1];
             COO = accounts[2];

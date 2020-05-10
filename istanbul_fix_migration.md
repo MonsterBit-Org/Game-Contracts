@@ -22,17 +22,17 @@ Preparations:
 * open the code updated in Remix, so you can deploy `SaleClockAuction`, `SiringClockAuction`, `MonsterBattles`, and `MonsterFood`
 * locate old auctions with `MonsterCore.saleAuction()` and `MonsterCore.siringAuction()`, use `*ClockAuction.ownerCut()` to get current fee value
 * deploy `SaleClockAuction`, `SiringClockAuction`, `MonsterBattles`, and `MonsterFood`
-    * they require `MonsterCore` address
-    * two auctions require `comission` argument  
-    * `MonsterBattles` requires `MonsterLib` address
+    * they require `MonsterCore` address
+    * two auctions require `comission` argument  
+    * `MonsterBattles` requires `MonsterLib` address
 * initialize contracts
-    * `MonsterFood.setFeedingFee()` (default value is `5 finney == 5000000000000000 wei`)
-    * `MonsterBattles`: setBackendAddress, setOneOnOneBet, setTeamfightBet
-    * `*ClockAuction`: setBumpFee, 
+    * `MonsterFood.setFeedingFee()` (default value is `5 finney == 5000000000000000 wei`)
+    * `MonsterBattles`: setBackendAddress, setOneOnOneBet, setTeamfightBet
+    * `*ClockAuction`: setBumpFee, 
 * transfer ownership to the actual `CEO`
-    * `MonsterBattles.transferOwnership()`
-    * `*ClockAuction.transferOwnership()`
-    * `MonsterFood.setOwner()`
+    * `MonsterBattles.transferOwnership()`
+    * `*ClockAuction.transferOwnership()`
+    * `MonsterFood.setOwner()`
 
 Optionally, check that `CFO` is set and `MonsterCore.withdrawDependentBalances()` fails.
 

@@ -27,8 +27,8 @@ Preparations:
     * `MonsterBattles` requires `MonsterLib` address
 * initialize contracts
     * `MonsterFood.setFeedingFee()` (default value is `5 finney == 5000000000000000 wei`)
-    * `MonsterBattles`: setBackendAddress, setOneOnOneBet, setTeamfightBet
-    * `*ClockAuction`: setBumpFee, 
+    * `MonsterBattles`: `setBackendAddress()`, `setOneOnOneBet()`, `setTeamfightBet()`
+    * `*ClockAuction`: `setBumpFee()` 
 * transfer ownership to the actual `CEO`
     * `MonsterBattles.transferOwnership()`
     * `*ClockAuction.transferOwnership()`

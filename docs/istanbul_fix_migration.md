@@ -36,7 +36,7 @@ Preparations:
 
 Optionally, check that `CFO` is set and `MonsterCore.withdrawDependentBalances()` fails.
 
-Some actions require `CEO` privileges:
+Further actions require `CEO` privileges:
 * make sure you have unlocked Metamask with the address listed as `CEO` for `MonsterCore`
 * `MonsterCore.pause()`, check it with `MonsterCore.paused()` call
 * use `MonsterCore` functions `setSaleAuctionAddress`, `setSiringAuctionAddress`, `setBattlesAddress()`, and `setMonsterFoodAddress` to bind new versions of contracts

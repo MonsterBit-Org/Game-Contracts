@@ -15,7 +15,7 @@
   },
   "scripts": {
     "test": "npx truffle test",
-    "test-ci": "npx ganache-cli &>/dev/null & npx truffle test",
+    "test-ci": "npx ganache-cli -q & npx truffle test",
     "coverage": "npx truffle run coverage --network coverage && cat coverage/lcov.info | coveralls"
   },
   "author": "",

@@ -5,10 +5,9 @@
 Contracts for the [MonsterBit](https://monsterbit.org/) collectible game.
 
 ## Contracts
-Important contracts
-
-### MonsterCore
-Main contract, most interactions happen through its functions.
+Important contracts of the system
+* MonsterCore - main contract, most interactions happen through its functions.
+* CEO - small contract that allows to give CEO role to two addresses.
 
 ## Test
 To test contracts

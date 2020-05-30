@@ -2,8 +2,8 @@ pragma solidity ^0.4.23;
 
 contract CEO {
     address private target;
-    address private ceo1;
-    address private ceo2;
+    address public ceo1;
+    address public ceo2;
     
     constructor(address _target, address _ceo1, address _ceo2) public {
         target = _target;

@@ -1,4 +1,4 @@
-﻿pragma solidity ^0.4.23;
+pragma solidity ^0.4.23;
 
 
 /// @title Interface for contracts conforming to ERC-721: Non-Fungible Tokens

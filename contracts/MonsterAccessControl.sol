@@ -1,4 +1,4 @@
-﻿pragma solidity ^0.4.23;
+pragma solidity ^0.4.23;
 
 /// @title A facet of MonsterCore that manages special access privileges.
 /// @dev See the MonsterCore contract documentation to understand how the various contract facets are arranged.
